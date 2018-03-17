@@ -9,6 +9,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "pixi-sound": "^2.0.1",
     "pixi.js": "^4.7.1",
     "webpack": "^4.1.1",
     "webpack-cli": "^2.0.12",
