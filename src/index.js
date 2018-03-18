@@ -142,6 +142,7 @@ function setup() {
         });
 
     }
+    //test
 
     myApp.ticker.add(function () {
 
