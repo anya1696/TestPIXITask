@@ -24,7 +24,6 @@ class chipPattern {
 
     forceGlow() {
         this.sprite.texture = PIXI.loader.resources[this.glowImg].texture;
-        console.log(this.glowTexure);
     }
 
     unGlow() {
@@ -55,8 +54,8 @@ class numbersPattern {
             strokeThickness: 6
         });
 
-        this.textSprite.value = value;
-        this.textSprite.id = id;
+        this.value = value;
+        this.id = id;
         this.textSprite.x = x;
         this.textSprite.y = y;
         this.textSprite.rotation = 0;
@@ -66,9 +65,13 @@ class numbersPattern {
 
     }
 
+    setValue(value){this.value = value;}
+    getValue(){return(this.value);}
+
     reDrowSprite(value) {
-        this.textSprite.value = value;
-        this.textSprite = new PIXI.Text(value, {
+        this.value = value;
+        this.textSprite.text = value;
+        /*this.textSprite = new PIXI.Text(value, {
             fontWeight: 'bold',
             fontSize: 60,
             fontFamily: 'Arial',
@@ -76,7 +79,7 @@ class numbersPattern {
             align: 'center',
             stroke: '#FFFFFF',
             strokeThickness: 6
-        });
+        });*/
 
     }
 
@@ -143,8 +146,8 @@ function setup() {
             let a = Math.floor(Math.random() * (16 - 1 + 1)) + 1;
             let b = Math.floor(Math.random() * (16 - 1 + 1)) + 1;
 
-            if (numbers[a].textSprite.value == numbers[b].textSprite.value &&
-                numbers[a].textSprite.id != numbers[b].textSprite.id) {
+            if (numbers[a].value == numbers[b].value &&
+                numbers[a].id != numbers[b].id) {
 
                 //let actionRotate =     new PIXI.action.RotateTo(1,500);
                 //let actionRotateBack = new PIXI.action.RotateTo(0,500);
@@ -194,16 +197,14 @@ function checkChip(firstChip, secondChip, firstNumber, secondNumber, soundDown, 
             firstNumber.vanish();
             secondNumber.vanish();
             soundDown.play();
+            firstChip.value = getNewValue();
+            secondChip.value = getNewValue();
+
             resolve();
         });
         chipPromise.then( (resolve, reject) => {
-                console.log("888888888888888888|", getNewValue());
-                firstChip.value = getNewValue();
                 firstNumber.reDrowSprite(firstChip.value);
-
-                secondChip.value = getNewValue();
                 secondNumber.reDrowSprite(secondChip.value);
-                console.log("|||||||",firstNumber.textSprite.value);
 
                 firstChip.unGlow();
                 secondChip.unGlow();
