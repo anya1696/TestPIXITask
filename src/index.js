@@ -94,7 +94,7 @@ class numbersPattern {
     }
 }
 
-PIXI.loader.add("chip.png").add("glow.png").add("down.mp3").load(setup);
+PIXI.loader.add("chip.png").add("glow.png").add("down.mp3").add("up.mp3").load(setup);
 
 function setup() {
     let chips = [];
@@ -103,6 +103,8 @@ function setup() {
     check = 0;
 
     const soundDown = PIXIsound.Sound.from("down.mp3");
+    const soundUp = PIXIsound.Sound.from("up.mp3");
+
 
     let myApp = new PIXI.Application({
         width: 1000,
@@ -134,7 +136,7 @@ function setup() {
                 clickOnChip(chips[i]);
                 check = 0;
                 secondChipId = i;
-                checkChip(chips[firstChipId], chips[secondChipId], numbers[firstChipId], numbers[secondChipId], soundDown);
+                checkChip(chips[firstChipId], chips[secondChipId], numbers[firstChipId], numbers[secondChipId], soundDown,soundUp);
             }
 
         });
@@ -188,7 +190,7 @@ function clickOnChip(chip) {
     chip.forceGlow();
 }
 
-function checkChip(firstChip, secondChip, firstNumber, secondNumber, soundDown, numbers) {
+function checkChip(firstChip, secondChip, firstNumber, secondNumber, soundDown, soundUp) {
     if (firstChip.value == secondChip.value && firstChip.id != secondChip.id) {
         let chipPromise = new Promise((resolve, reject) => {
             firstChip.vanish();
@@ -203,6 +205,7 @@ function checkChip(firstChip, secondChip, firstNumber, secondNumber, soundDown, 
             resolve();
         });
         chipPromise.then( (resolve, reject) => {
+                soundUp.play();
                 firstNumber.reDrowSprite(firstChip.value);
                 secondNumber.reDrowSprite(secondChip.value);
 
